@@ -15,21 +15,29 @@ const app = express();
 //   res.send("HAHAHAHAHA");
 // })
 
-app.get("/user", (req, res)=>{
+// Dynamic using Query 
+// app.get("/user", (req, res)=>{
+//   console.log(req.query);
+//   res.send({firstname: "Sachin", secondname: "Handa"});
+// })
+
+// Dynamic using Params
+app.get("/user/:userID/:name/:password", (req, res)=>{
+  console.log(req.params);
   res.send({firstname: "Sachin", secondname: "Handa"});
 })
 
-app.post("/user", (req, res)=>{
-  res.send("Data saved successfully to DataBase.");
-})
+// app.post("/user", (req, res)=>{
+//   res.send("Data saved successfully to DataBase.");
+// })
 
-app.delete("/user", (req, res)=>{
-  res.send("Data Deleted Successfully from DataBase");
-})
+// app.delete("/user", (req, res)=>{
+//   res.send("Data Deleted Successfully from DataBase");
+// })
 // this will match all HTTP methods API call to /test route
-app.use("/test", (req, res)=>{
-    res.send("Hello from test route");
-})
+// app.use("/test", (req, res)=>{
+//     res.send("Hello from test route");
+// })
 
 
 // app.use("/",(req, res)=>{
