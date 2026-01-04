@@ -1,37 +1,30 @@
 const express = require("express");
+const {adminAuth, userAuth} = require("./middleware/adminAuth");
 
 const app = express();
 
-// app.use("/route", rH1, [rH2, rH3], rH4, rH5);
+app.use("/admin", adminAuth);
 
-app.use(
-  "/user",
- [(req, res, next) => {
-    console.log("Handling Router 1st");
-    // res.send("1st Response");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Handling Router 2nd");
-    // res.send("2nd Response");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Handling Router 3rd");
-    // res.send("3rd Response");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Handling Router 4th");
-    // res.send("4th Response");
-    next();
-  },
-  (req, res, next) => {
-    console.log("Handling Router 5th");
-    res.send("5th Response");
-  }
-]
-);
+app.post("/user/login", (req,res)=>{
+  console.log("User Login Request Received");
+  res.send("User started Login process");
+})
+
+app.get("/user/data", userAuth, (req, res)=>{
+  // console.log("User Request Received");
+  res.send("User Accessed Successfully");
+});
+
+app.get("/admin/getAllData", (req, res)=>{
+  // console.log("1st Request Received");
+  res.send("All Data Accessed");
+})
+
+app.get("/admin/deleteData", (req, res)=>{
+  // console.log("2nd Request Received");
+  res.send("Data Deleted Successfully");
+})
+
 
 app.listen(7777, () => {
   console.log("Server is listening on port 7777");
