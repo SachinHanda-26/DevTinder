@@ -1,30 +1,29 @@
 const express = require("express");
-const {adminAuth, userAuth} = require("./middleware/adminAuth");
+// const {adminAuth, userAuth} = require("./middleware/adminAuth");
 
 const app = express();
 
-app.use("/admin", adminAuth);
-
-app.post("/user/login", (req,res)=>{
-  console.log("User Login Request Received");
-  res.send("User started Login process");
-})
-
-app.get("/user/data", userAuth, (req, res)=>{
-  // console.log("User Request Received");
-  res.send("User Accessed Successfully");
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Oops! There is an error");
+  }
 });
 
-app.get("/admin/getAllData", (req, res)=>{
-  // console.log("1st Request Received");
-  res.send("All Data Accessed");
-})
+app.get("/getUserData", (req, res) => {
+  // try {
+    throw new Error("fjkdnbbnd");
+    res.send("User Data accessed");
+  // } 
+  // catch (err) {
+  //   res.status(500).send("Something went wrong");
+  // }
+});
 
-app.get("/admin/deleteData", (req, res)=>{
-  // console.log("2nd Request Received");
-  res.send("Data Deleted Successfully");
-})
-
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Oops! There is an error");
+  }
+});
 
 app.listen(7777, () => {
   console.log("Server is listening on port 7777");
