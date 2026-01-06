@@ -7,8 +7,33 @@ const app = express();
 
 app.use(express.json());
 
-app.post("/signup", async (req, res) => {
+app.get("/user", async (req, res) => {
+  const userEmail = req.body.email;
 
+  try {
+    const users = await User.findOne({ email: userEmail });
+    if (users.length == 0) {
+      res.status(404).send("No user found with the given email");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res.status(400).send("Something went wrong");
+  }
+
+  // try {
+  //   const users = await User.find({ email: userEmail });
+  //   if (users.length == 0) {
+  //     res.status(404).send("No user found with the given email");
+  //   } else {
+  //     res.json(users);
+  //   }
+  // } catch (err) {
+  //   res.status(400).send("Something went wrong");
+  // }
+});
+
+app.post("/signup", async (req, res) => {
   // console.log(req.body);
 
   // const userObj = {
@@ -26,6 +51,20 @@ app.post("/signup", async (req, res) => {
     res.send("User signed up successfully");
   } catch (err) {
     res.status(400).send("Error signing up user");
+  }
+});
+
+// Feed API - Get all the users from the database
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    if (users.length == 0) {
+      res.status(404).send("No users found in the database");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res.status(400).send("Something went wrong");
   }
 });
 
