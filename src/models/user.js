@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 // Creating a monggose schema for User
 const userSchema = new mongoose.Schema({
@@ -17,10 +18,20 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
+    validate(value){
+        if(!validator.isEmail(value)){
+            throw new Error("Email is not valid");
+        }
+    }
   },
   password: {
     type: String,
     required: true,
+    validate(value){
+        if(!validator.isStrongPassword(value)){
+            throw new Error("Entered Password is not Strong");
+        }
+    }
   },
   age: {
     type: Number,
@@ -37,6 +48,12 @@ throw new Error("Gneder data is not valid");
   photoURL: {
     type: String,
     default: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVYCG0nML0gAjeNUVHcebvl04AHVdwuHOPNg&s",
+
+     validate(value){
+        if(!validator.isURL(value)){
+            throw new Error("Not a valid image URL");
+        }
+    }
   },
   about: {
     type: String,
