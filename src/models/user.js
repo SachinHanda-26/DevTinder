@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 // Creating a monggose schema for User
 const userSchema = new mongoose.Schema({
@@ -65,6 +67,24 @@ throw new Error("Gneder data is not valid");
 },{
     timestamps: true,
 });
+
+userSchema.methods.getJWT = async function(){
+  const user = this;
+
+  const token = await jwt.sign({_id: user._id}, "Dev@Tinder$202", {expiresIn: "7d"});
+
+  return token;
+}
+
+
+userSchema.methods.passValidate = async function(passwordInputByUser){
+  const user = this;
+  const passwordHash = user.password;
+
+  const isPasswordValid = await bcrypt.compare(passwordInputByUser, passwordHash);
+
+  return isPasswordValid;
+}
 
 // Creating a mongoose model for User
 const User = mongoose.model("User", userSchema);
