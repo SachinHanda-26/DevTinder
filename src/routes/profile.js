@@ -1,23 +1,42 @@
 const express = require("express");
 const profileRouter = express.Router();
 
-const {userAuth} = require("../middleware/adminAuth.js");
+const { userAuth } = require("../middleware/adminAuth.js");
+const { validateProfileUpdateData } = require("../utils/validations.js");
 
-profileRouter.get("/profile", userAuth, async (req, res)=>{
+profileRouter.get("/profile/view", userAuth, async (req, res) => {
+  try {
+    const user = req.user;
 
-  try{
-  const user = req.user;
+    if (!user) {
+      throw new Error("User not found");
+    }
 
-  if(!user){
-    throw new Error("User not found");
-  }
-
-  res.send(user);
-  }
-catch (err) {
+    res.send(user);
+  } catch (err) {
     res.status(400).send("Error: " + err.message);
   }
-  
+});
+
+profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
+  try {
+    if (!validateProfileUpdateData(req)) {
+      throw new Error("Invalid edits request!!");
+    }
+
+    const loggedInUser = req.user;
+
+    Object.keys(req.body).forEach((key)=>{
+      loggedInUser[key] = req.body[key];
+    });
+
+    await loggedInUser.save();
+
+    res.json({ message: `${loggedInUser.firstName}, your profile has been updated successfully`, data: loggedInUser});
+
+  } catch (err) {
+    res.status(400).send("Error: " + err.message);
+  }
 });
 
 module.exports = profileRouter;
