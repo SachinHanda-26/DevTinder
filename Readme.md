@@ -1,4 +1,4 @@
-- Create a repository 
+- Create a repository
 - Initialize the repository
 - node.modules, package.json, package-lock.json
 - Install express
@@ -30,9 +30,9 @@
 - How express JS basically handles requests behind the scenes
 - Difference app.use and app.all
 - Write a dummy auth middleware for admin
-- Write a dummy auth middleware for all  user routes, except /user/login
-- Error Handling using app.use("/", (err, req, res, next)=>{}) 
- - Always use this at the end of the code.
+- Write a dummy auth middleware for all user routes, except /user/login
+- Error Handling using app.use("/", (err, req, res, next)=>{})
+- Always use this at the end of the code.
 
 - Create a free cluster on MongoDB official website (Mongo Atlas)
 - Install mongoose library
@@ -54,8 +54,8 @@
 - Difference between PATCH and PUT
 - API - Update a user
 - Explore the Mongoose Documentation for Model methods
-- What are options in a Model.findOneAndUpdate method, explore more about it 
-- API - Update the user with email ID 
+- What are options in a Model.findOneAndUpdate method, explore more about it
+- API - Update the user with email ID
 
 - Expore schematype options from the documentation
 - add required, unique, lowercase, min, minLength, trim
@@ -109,3 +109,21 @@
 - Why do we need index in DB?
 - What is the advantages and disadvantage of creating?
 - Read this article about indexes - compound indexing(mongodb)
+
+- Write code with proper validations for POST /request/review/:status/:requestId
+- Thought process - POST vs GET
+- Read about ref and populate https://mongoosejs.com/docs/populate.html
+- Create GET /user/requests/received with all the checks
+- Create GET GET /user/connections
+
+- Login for GET /feed API
+- Explore the $nin, $and, $ne and other query operatorators
+- Pagination
+
+/feed?page=1&limit=10 => 1-10 => .skip(0) & .limit(10)
+
+/feed?page=2&limit=10 => 11-20 => .skip(10) & .limit(10)
+
+/feed?page=3&limit=10 => 1-10 => .skip(20) & .limit(10)
+
+skip = (page - 1) * limit;
