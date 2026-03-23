@@ -32,7 +32,7 @@ const connectionRequests = await ConnectionRequest.find({
   ],
 }).populate("fromUserId", USER_DATA).populate("toUserId", USER_DATA);
 
-console.log(connectionRequests);
+// console.log(connectionRequests);
 
 const data = connectionRequests.map(row => {
   if(row.fromUserId._id.toString() === loginInUser._id.toString()){
